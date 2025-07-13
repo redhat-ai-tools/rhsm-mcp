@@ -64,6 +64,62 @@ async def account_management_list_users(account_id: str):
 
 
 @mcp.tool()
+async def account_management_create_user(
+    account_id: str,
+    user_email: str,
+    user_first_name: str,
+    user_last_name: str,
+    username: str | None = None,
+):
+    """Create User under the account from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users"
+    username = username or user_email.split("@")[0]
+    data = {
+        "address": {
+            "city": "RALEIGH",
+            "country": "US",
+            "streets": ["100 E. Davie Street"],
+            "state": "NC",
+            "county": "WAKE",
+            "zipCode": "27601",
+        },
+        "email": user_email,
+        "firstName": user_first_name,
+        "lastName": user_last_name,
+        "roles": [],
+        "permissions": [
+            "portal_manage_cases",
+            "portal_system_management",
+            "portal_download",
+            "portal_manage_subscriptions",
+        ],
+        "phone": "18887334281",
+        "username": username or user_email.split("@")[0],
+    }
+    response = await make_request(url, method="POST", data=data)
+    return response
+
+
+@mcp.tool()
+async def account_management_invite_user(account_id: str, user_emails: list[str]):
+    """Invite Users under the account from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users"
+    data = {
+        "emails": [user_emails],
+        "localeCode": "en_US",
+        "roles": [],
+        "permissions": [
+            "portal_manage_cases",
+            "portal_system_management",
+            "portal_download",
+            "portal_manage_subscriptions",
+        ],
+    }
+    response = await make_request(url, method="POST", data=data)
+    return response
+
+
+@mcp.tool()
 async def account_management_get_user(account_id: str, user_id: str):
     """Get User Details under the account from Red Hat Subscription Management - Account management"""
     url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users/{user_id}"
@@ -76,6 +132,15 @@ async def account_management_get_user_roles(account_id: str, user_id: str):
     """Get Roles Associated under the account from Red Hat Subscription Management - Account management"""
     url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users/{user_id}/roles"
     response = await make_request(url)
+    return response
+
+
+@mcp.tool()
+async def account_management_grant_user_admin(account_id: str, user_id: str):
+    """Assign Organization Administrator Role To User under the account from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users/{user_id}/roles"
+    data = {"role": "organization_administrator"}
+    response = await make_request(url, method="POST", data=data)
     return response
 
 
