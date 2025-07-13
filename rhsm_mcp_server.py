@@ -48,7 +48,7 @@ async def make_request(
 
 
 @mcp.tool()
-async def account_management_get_accounts():
+async def account_management_list_accounts():
     """List Account Information from Red Hat Subscription Management - Account management"""
     url = f"{RHSM_API_BASE}/account/v1/accounts"
     response = await make_request(url)
@@ -56,7 +56,7 @@ async def account_management_get_accounts():
 
 
 @mcp.tool()
-async def subscription_management_get_systems():
+async def subscription_management_list_systems():
     """List all systems for a user from Red Hat Subscription Management - Subscription Management"""
     url = f"{RHSM_API_BASE}/management/systems"
     response = await make_request(url)
