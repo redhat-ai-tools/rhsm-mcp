@@ -56,6 +56,46 @@ async def account_management_list_accounts():
 
 
 @mcp.tool()
+async def account_management_list_users(account_id: str):
+    """List all the users under the account from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users"
+    response = await make_request(url)
+    return response
+
+
+@mcp.tool()
+async def account_management_get_user(account_id: str, user_id: str):
+    """Get User Details under the account from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users/{user_id}"
+    response = await make_request(url)
+    return response
+
+
+@mcp.tool()
+async def account_management_get_user_roles(account_id: str, user_id: str):
+    """Get Roles Associated under the account from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users/{user_id}/roles"
+    response = await make_request(url)
+    return response
+
+
+@mcp.tool()
+async def account_management_get_user_status(account_id: str, user_id: str):
+    """Get User Status under the account from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/accounts/{account_id}/users/{user_id}/status"
+    response = await make_request(url)
+    return response
+
+
+@mcp.tool()
+async def account_management_whoami():
+    """Get Current User's Personal Information from Red Hat Subscription Management - Account management"""
+    url = f"{RHSM_API_BASE}/account/v1/user"
+    response = await make_request(url)
+    return response
+
+
+@mcp.tool()
 async def subscription_management_list_systems():
     """List all systems for a user from Red Hat Subscription Management - Subscription Management"""
     url = f"{RHSM_API_BASE}/management/systems"
