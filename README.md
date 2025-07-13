@@ -2,6 +2,7 @@
 
 MCP (ModelContextProtocol) Server for Red Hat Subscription Management
 
+Getting started with Red Hat APIs: https://access.redhat.com/articles/3626371
 
 ## Running with Podman or Docker
 
